@@ -67,6 +67,22 @@
       document.getElementById("out").textContent = "[ZOTHOS-ENCLAVE] Executed at " + new Date().toISOString() + "\n" + v;
     }
   </script>
-  <script src="/assets/sovereign-upgrade.js" defer></script>
+  
+
+  <script src="/sovereign_tutorial.js"></script>
+  <script>
+    window.addEventListener("DOMContentLoaded", function() {
+      if (window.createSovereignTutorial) {
+        window.createSovereignTutorial({
+          toolId: "azoth-local-agent",
+          toolName: "AZOTH Local Archon Agent",
+          tagline: "The supreme local orchestrator that organizes and delegates tasks to AI subagents!",
+          accentColor: "#D4AF37",
+          steps: [{"icon": "\ud83d\udc51", "title": "Meet AZOTH Prime", "desc": "AZOTH is the grand architect agent who reads your big goals and delegates small jobs to specialist subagents."}, {"icon": "\ud83e\udde0", "title": "STDP Biomorphic Memory", "desc": "Learns from past mistakes and strengthens successful problem-solving pathways across sessions."}, {"icon": "\ud83d\udd12", "title": "100% Zero-Cloud Egress", "desc": "All task reasoning and subagent messaging runs strictly on your machine without third-party telemetry."}]
+        });
+      }
+    });
+  </script>
+
 </body>
 </html>
