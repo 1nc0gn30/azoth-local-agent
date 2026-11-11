@@ -5,6 +5,7 @@ Supports Docker/Podman Guest OS, local isolated Sandbox PTY, and QEMU micro-VM h
 """
 
 import os
+import sys
 import subprocess
 import shutil
 import time
@@ -225,8 +226,18 @@ class GuestOSManager:
             # Fallback to local sandbox directory
             run_dir = workdir or str(WORKSPACE_DIR)
             cmd_to_run = command.replace("/workspace", str(WORKSPACE_DIR))
+            sandbox_env = os.environ.copy()
+            py_bin_dir = str(Path(sys.executable).parent)
+            sandbox_env["PATH"] = f"{py_bin_dir}:{WORKSPACE_DIR.resolve()}:{sandbox_env.get('PATH', '')}"
             try:
-                res = subprocess.run(["/bin/bash", "-c", cmd_to_run], cwd=run_dir, capture_output=True, text=True, timeout=timeout)
+                res = subprocess.run(
+                    ["/bin/bash", "-c", cmd_to_run],
+                    cwd=run_dir,
+                    env=sandbox_env,
+                    capture_output=True,
+                    text=True,
+                    timeout=timeout,
+                )
                 duration_ms = int((time.time() - t0) * 1000)
                 return {
                     "stdout": res.stdout,

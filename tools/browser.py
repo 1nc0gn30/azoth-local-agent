@@ -195,17 +195,26 @@ class SandboxBrowser:
         # Register clean exit handler
         atexit.register(self.close)
 
-    def is_context_alive(self) -> bool:
-        """Check if browser context and playwright instance are alive."""
+    def _is_context_alive_worker(self) -> bool:
         if self.context is None or self.playwright is None:
             return False
         try:
             pages = self.context.pages
             if not pages:
                 return False
-            # Lightweight probe
             _ = pages[0].url
             return True
+        except Exception:
+            return False
+
+    def is_context_alive(self) -> bool:
+        """Check if browser context and playwright instance are alive (thread-safe)."""
+        if self.context is None or self.playwright is None:
+            return False
+        if threading.current_thread() == self._worker_thread:
+            return self._is_context_alive_worker()
+        try:
+            return self._executor.submit(self._is_context_alive_worker).result(timeout=5)
         except Exception:
             return False
 
