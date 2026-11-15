@@ -62,6 +62,9 @@ app.add_middleware(
 STATIC_DIR = ROOT / "static"
 STATIC_DIR.mkdir(parents=True, exist_ok=True)
 app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
+ASSETS_DIR = ROOT / "public" / "assets"
+if ASSETS_DIR.is_dir():
+    app.mount("/assets", StaticFiles(directory=ASSETS_DIR), name="assets")
 
 # Active Engine & Mode State
 active_state = {
@@ -211,6 +214,52 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>aZoth-local — Autonomous Agent & Grok-Grade Intelligence Studio</title>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebApplication",
+        "name": "AZOTH Local Archon Agent",
+        "url": "https://zoth.nullai.tech/tools/azoth-local-agent",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Linux, macOS, Windows",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD",
+          "url": "https://buy.stripe.com/3cIfZg27PdKo2D64Ocfw40X"
+        },
+        "creator": {
+          "@type": "Organization",
+          "name": "Neal Frazier Tech",
+          "url": "https://nullai.tech"
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Is AZOTH Local Archon Agent 100% free and open-access?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. AZOTH Local Archon Agent is 100% free and open-access with zero paywalls. Optional support is available via Stripe Buy Us a Coffee and Solana tips (GG2eQbVh8ut1BK6j1A2tz7pSySdLpD38BgyEhGcxdXoK)."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Does AZOTH run locally without cloud telemetry?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. All local agent routing, DuckyScript automation, Python sandbox execution, and workspace file management run locally on your machine."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
   
   <!-- Local Offline Assets: 100% Private, Zero Third-Party Tracking Cookies -->
   <link rel="stylesheet" href="/static/highlight.css">
@@ -1182,6 +1231,15 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
     </aside>
 
   </div>
+
+  <footer class="bg-white border-t border-gborder px-4 py-1.5 text-[11px] text-gsub flex flex-wrap items-center justify-between gap-2 shrink-0">
+    <span>Engineered by <strong>Neal Frazier Tech</strong> (<a href="https://github.com/1nc0gn30" target="_blank" rel="noopener noreferrer" class="text-gblue hover:underline">@1nc0gn30</a>) • <a href="https://nullai.tech" target="_blank" rel="noopener noreferrer" class="text-gblue hover:underline">NullAI Platform</a></span>
+    <span class="flex items-center gap-3 flex-wrap">
+      <a href="https://github.com/NullAITech/azoth-local-agent" target="_blank" rel="noopener noreferrer" class="hover:text-gdark">GitHub</a>
+      <a href="https://buy.stripe.com/3cIfZg27PdKo2D64Ocfw40X" target="_blank" rel="noopener noreferrer" class="text-amber-800 font-semibold hover:underline">☕ Buy Us a Coffee</a>
+      <a href="solana:GG2eQbVh8ut1BK6j1A2tz7pSySdLpD38BgyEhGcxdXoK" class="text-emerald-800 font-mono hover:underline">◎ Solana Tip: GG2e...dXoK</a>
+    </span>
+  </footer>
 
   <!-- Workspace File Editor Modal -->
   <div id="file-modal" class="fixed inset-0 bg-black/45 backdrop-blur-xs z-50 hidden flex items-center justify-center p-6">
