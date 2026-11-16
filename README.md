@@ -96,3 +96,24 @@ gitleaks detect --source . --no-banner --redact
 - **Support**: [Buy Us a Coffee via Stripe](https://buy.stripe.com/3cIfZg27PdKo2D64Ocfw40X) · Solana Tip Address: `GG2eQbVh8ut1BK6j1A2tz7pSySdLpD38BgyEhGcxdXoK` (`solana:GG2eQbVh8ut1BK6j1A2tz7pSySdLpD38BgyEhGcxdXoK`)
 
 Engineered by **Neal Frazier Tech** ([@1nc0gn30](https://github.com/1nc0gn30)) • [NullAI Platform](https://nullai.tech) • [Zoth Studio](https://zoth.nullai.tech)
+
+## Sovereign Surfaces
+
+_Machine-generated surface inventory (docs/tools/layerD_probe.py). Do not hand-edit; re-run the probe instead.
+
+**What it does.** AZOTH Local Archon Agent — aZoth-local — Autonomous Local Archon Agent & Multi-Engine Router
+
+**Category.** Swarm & Core  ·  **Version.** 3.0.0  ·  **Execution type.** `local_cli`
+
+**Architecture & port.** Canonical source: `~/NullAITech/azoth-local-agent`. Assigned `localPort` **8136** (`http://127.0.0.1:8136`).
+
+**ZothOS CLI usage.**
+
+```bash
+azoth-local-agent --help     # exit 0
+azoth-local-agent --json     # exit 0
+```
+
+**Zoth Studio route.** https://zoth.nullai.tech/tools/azoth-local-agent
+
+_Verified 2026-11-15 across the three install surfaces (`/usr/local/bin`, `~/.local/bin`, `zoth-os/config/includes.chroot/usr/local/bin`)._
