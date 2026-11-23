@@ -569,6 +569,15 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       font-size: 0.75rem;
       color: #9aa0a6;
     }
+
+    /* Clean horizontal scroll strips on mobile */
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
   </style>
 </head>
 <body class="bg-glight text-gtext min-h-screen xl:h-screen flex flex-col antialiased overflow-x-hidden xl:overflow-hidden select-none">
@@ -611,97 +620,97 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
   </div>
 
   <!-- Top Navigation Header -->
-  <header class="min-h-16 py-2 bg-gsurface border-b border-gborderLight px-3 sm:px-6 flex flex-wrap items-center justify-between gap-2 shadow-[0_1px_2px_rgba(60,64,67,0.06)] shrink-0 z-20">
-    <div class="flex items-center space-x-3">
+  <header class="min-h-14 sm:min-h-16 py-2 bg-gsurface border-b border-gborderLight px-3 sm:px-6 flex flex-col sm:flex-row sm:flex-wrap sm:items-center sm:justify-between gap-2 shadow-[0_1px_2px_rgba(60,64,67,0.06)] shrink-0 z-20">
+    <div class="flex items-center space-x-2.5 sm:space-x-3 min-w-0">
       
       <!-- Header Mascot Icon -->
-      <div id="header-bot-preview" onclick="setTab('customizer')" title="Click to customize mascot" class="w-10 h-10 rounded-full flex items-center justify-center shadow-sm transition-all duration-300 palette-google anim-breathe text-white cursor-pointer hover:scale-105 active:scale-95 shrink-0">
-        <span class="text-base font-bold tracking-tight">aZ</span>
+      <div id="header-bot-preview" role="button" tabindex="0" onclick="setTab('customizer')" title="Click to customize mascot" aria-label="Customize aZoth mascot" class="w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center shadow-sm transition-all duration-300 palette-google anim-breathe text-white cursor-pointer hover:scale-105 active:scale-95 shrink-0">
+        <span class="text-sm sm:text-base font-bold tracking-tight">aZ</span>
       </div>
       
-      <div class="min-w-0">
-        <div class="flex flex-wrap items-center gap-1.5">
-          <span class="font-bold text-base sm:text-lg text-gdark tracking-tight">aZoth-local</span>
-          <span class="text-[10px] sm:text-[11px] font-semibold text-purple-700 bg-purple-50 px-2 py-0.5 rounded-full border border-purple-200 flex items-center space-x-1">
+      <div class="min-w-0 flex-1">
+        <div class="flex items-center gap-1.5 min-w-0">
+          <span class="font-bold text-base sm:text-lg text-gdark tracking-tight whitespace-nowrap">aZoth-local</span>
+          <span class="text-[10px] sm:text-[11px] font-semibold text-purple-700 bg-purple-50 px-2 py-0.5 rounded-full border border-purple-200 flex items-center space-x-1 whitespace-nowrap shrink-0">
             <span class="w-1.5 h-1.5 rounded-full bg-purple-600 animate-pulse"></span>
             <span>Grok-Grade Intelligence</span>
           </span>
         </div>
-        <p class="text-[10px] sm:text-[11px] text-gsub font-normal truncate max-w-[260px] sm:max-w-none">DeepSearch Citations • Live X Scouting • Sandbox Browser • Python REPL</p>
+        <p class="hidden sm:block text-[11px] text-gsub font-normal truncate">DeepSearch Citations • Live X Scouting • Sandbox Browser • Python REPL</p>
       </div>
     </div>
 
     <!-- Header Action Bar -->
-    <div class="flex flex-wrap items-center gap-1.5">
+    <div class="w-full sm:w-auto flex items-center sm:flex-wrap gap-1.5 overflow-x-auto no-scrollbar pb-0.5 sm:pb-0">
       
       <!-- Grok Mode Switcher Shortcut -->
-      <button onclick="cycleMode()" id="header-mode-badge" title="Cycle Grok Persona Mode (Regular, Fun, Think, Coder)" class="px-2.5 sm:px-3 py-1.5 text-xs font-semibold text-purple-900 bg-purple-50 border border-purple-200 rounded-full hover:bg-purple-100 transition flex items-center space-x-1.5 shadow-2xs">
+      <button onclick="cycleMode()" id="header-mode-badge" title="Cycle Grok Persona Mode (Regular, Fun, Think, Coder)" aria-label="Cycle Grok Persona Mode" class="shrink-0 whitespace-nowrap px-2.5 sm:px-3 py-1.5 text-xs font-semibold text-purple-900 bg-purple-50 border border-purple-200 rounded-full hover:bg-purple-100 transition flex items-center space-x-1.5 shadow-2xs">
         <span id="header-mode-icon">⚡</span>
         <span id="header-mode-label">Truth Mode</span>
       </button>
 
       <!-- Command Palette Trigger Button (Ctrl+K) -->
-      <button onclick="openCommandPalette()" title="Open Command Palette (Ctrl+K)" class="px-2.5 sm:px-3 py-1.5 text-xs text-gsub hover:text-gdark bg-gray-50 hover:bg-gray-100 border border-gborder rounded-full transition flex items-center space-x-1.5 shadow-2xs">
+      <button onclick="openCommandPalette()" title="Open Command Palette (Ctrl+K)" aria-label="Open Command Palette" class="shrink-0 whitespace-nowrap px-2.5 sm:px-3 py-1.5 text-xs text-gsub hover:text-gdark bg-gray-50 hover:bg-gray-100 border border-gborder rounded-full transition flex items-center space-x-1.5 shadow-2xs">
         <svg class="w-3.5 h-3.5 text-gsub" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
         <span class="font-medium hidden sm:inline">Quick Actions</span>
         <span class="font-mono text-[10px] text-gray-400 bg-white px-1.5 py-0.5 rounded border border-gborder">⌘K</span>
       </button>
 
       <!-- Active Engine Switcher Shortcut -->
-      <button onclick="setTab('engines')" title="Switch AI Agent Engine" class="px-2.5 sm:px-3 py-1.5 text-xs font-semibold text-gdark bg-gray-50 border border-gborder rounded-full hover:bg-blue-50 hover:border-gblue transition flex items-center space-x-1.5 shadow-2xs">
+      <button onclick="setTab('engines')" title="Switch AI Agent Engine" aria-label="Switch AI Agent Engine" class="shrink-0 whitespace-nowrap px-2.5 sm:px-3 py-1.5 text-xs font-semibold text-gdark bg-gray-50 border border-gborder rounded-full hover:bg-blue-50 hover:border-gblue transition flex items-center space-x-1.5 shadow-2xs">
         <span id="header-engine-icon" class="text-sm">🦙</span>
         <span id="header-engine-label">Sovereign Local</span>
         <svg class="w-3 h-3 text-gsub" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
       </button>
 
       <!-- DuckyScript Studio Tab Shortcut -->
-      <button onclick="setTab('ducky')" title="Open DuckyScript Automation Studio" class="px-2.5 sm:px-3 py-1.5 text-xs font-semibold text-amber-900 bg-amber-50 border border-amber-200 rounded-full hover:bg-amber-100 transition flex items-center space-x-1 shadow-2xs">
+      <button onclick="setTab('ducky')" title="Open DuckyScript Automation Studio" aria-label="Open DuckyScript Automation Studio" class="shrink-0 whitespace-nowrap px-2.5 sm:px-3 py-1.5 text-xs font-semibold text-amber-900 bg-amber-50 border border-amber-200 rounded-full hover:bg-amber-100 transition flex items-center space-x-1 shadow-2xs">
         <span>🦆</span>
         <span class="hidden md:inline">Ducky Studio</span>
       </button>
 
       <!-- Live Interactive Browser Shortcut -->
-      <button onclick="setTab('browser')" title="Open Interactive Browser Sandbox" class="px-2.5 sm:px-3 py-1.5 text-xs font-semibold text-gblue bg-blue-50 border border-blue-200 rounded-full hover:bg-blue-100 transition flex items-center space-x-1.5 shadow-2xs">
+      <button onclick="setTab('browser')" title="Open Interactive Browser Sandbox" aria-label="Open Interactive Browser Sandbox" class="shrink-0 whitespace-nowrap px-2.5 sm:px-3 py-1.5 text-xs font-semibold text-gblue bg-blue-50 border border-blue-200 rounded-full hover:bg-blue-100 transition flex items-center space-x-1.5 shadow-2xs">
         <span class="w-2 h-2 rounded-full bg-gblue animate-ping"></span>
         <span class="hidden md:inline">Live Browser</span>
       </button>
 
       <!-- OS Terminal / Virtual Environment Shortcut -->
-      <button onclick="setTab('terminal')" title="Open Isolated Linux Guest OS & Web Terminal" class="px-2.5 sm:px-3 py-1.5 text-xs font-semibold text-cyan-900 bg-cyan-50 border border-cyan-200 rounded-full hover:bg-cyan-100 transition flex items-center space-x-1.5 shadow-2xs">
+      <button onclick="setTab('terminal')" title="Open Isolated Linux Guest OS & Web Terminal" aria-label="Open Isolated Linux Guest OS and Web Terminal" class="shrink-0 whitespace-nowrap px-2.5 sm:px-3 py-1.5 text-xs font-semibold text-cyan-900 bg-cyan-50 border border-cyan-200 rounded-full hover:bg-cyan-100 transition flex items-center space-x-1.5 shadow-2xs">
         <span class="w-2 h-2 rounded-full bg-cyan-500 animate-pulse"></span>
         <span class="hidden md:inline">OS Terminal</span>
       </button>
 
       <!-- Waveform Indicator -->
-      <button onclick="toggleWaveform()" id="waveform-btn" title="Toggle Waveform Indicator (Ctrl+W)" class="p-1.5 px-2 bg-gray-50 hover:bg-gray-100 border border-gborder rounded-full transition hidden sm:flex items-center space-x-1 shadow-2xs">
+      <button onclick="toggleWaveform()" id="waveform-btn" title="Toggle Waveform Indicator (Ctrl+W)" aria-label="Toggle Waveform Indicator" class="shrink-0 whitespace-nowrap p-1.5 px-2 bg-gray-50 hover:bg-gray-100 border border-gborder rounded-full transition hidden sm:flex items-center space-x-1 shadow-2xs">
         <svg class="w-3.5 h-3.5 text-gsub" viewBox="0 0 40 16" fill="none"><rect id="waveform-bars" x="0" y="0" width="40" height="16" rx="8" fill="none" stroke="#5f6368" stroke-width="1"/><polyline id="waveform-line" points="0,8 10,4 20,12 30,2 40,8" fill="none" stroke="#1a73e8" stroke-width="1.5"/></svg>
         <span class="text-[10px] font-mono text-gsub">WAVE</span>
       </button>
 
       <!-- Stealth Mode Toggle -->
-      <button onclick="toggleStealthMode()" id="stealth-btn" title="Toggle Stealth Mode (Ctrl+S)" class="p-1.5 px-2 bg-gray-50 hover:bg-gray-100 border border-gborder rounded-full transition hidden sm:flex items-center space-x-1 shadow-2xs">
+      <button onclick="toggleStealthMode()" id="stealth-btn" title="Toggle Stealth Mode (Ctrl+S)" aria-label="Toggle Stealth Mode" class="shrink-0 whitespace-nowrap p-1.5 px-2 bg-gray-50 hover:bg-gray-100 border border-gborder rounded-full transition hidden sm:flex items-center space-x-1 shadow-2xs">
         <svg class="w-3.5 h-3.5 text-gsub" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L6.64 6.64m3.238 3.238l-3.24-3.24m7.425 7.425l3.24 3.24M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
         <span class="text-[10px] font-mono text-gsub">STEALTH</span>
       </button>
 
       <!-- Scan Line Toggle -->
-      <button onclick="toggleScanline()" id="scanline-btn" title="Toggle Scan Line Effect (Ctrl+L)" class="p-1.5 px-2 bg-gray-50 hover:bg-gray-100 border border-gborder rounded-full transition hidden sm:flex items-center space-x-1 shadow-2xs">
+      <button onclick="toggleScanline()" id="scanline-btn" title="Toggle Scan Line Effect (Ctrl+L)" aria-label="Toggle Scan Line Effect" class="shrink-0 whitespace-nowrap p-1.5 px-2 bg-gray-50 hover:bg-gray-100 border border-gborder rounded-full transition hidden sm:flex items-center space-x-1 shadow-2xs">
         <svg class="w-3.5 h-3.5 text-gsub" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
         <span class="text-[10px] font-mono text-gsub">SCAN</span>
       </button>
 
       <!-- Support: Buy Us a Coffee & Solana Tip -->
-      <a href="https://buy.stripe.com/3cIfZg27PdKo2D64Ocfw40X" target="_blank" rel="noopener noreferrer" title="Support Open-Access Tools — Buy Us a Coffee" class="px-2.5 py-1.5 text-xs font-semibold text-amber-900 bg-amber-50 hover:bg-amber-100 border border-amber-200 rounded-full transition flex items-center space-x-1 shadow-2xs">
+      <a href="https://buy.stripe.com/3cIfZg27PdKo2D64Ocfw40X" target="_blank" rel="noopener noreferrer" title="Support Open-Access Tools — Buy Us a Coffee" aria-label="Support Open-Access Tools — Buy Us a Coffee" class="shrink-0 whitespace-nowrap px-2.5 py-1.5 text-xs font-semibold text-amber-900 bg-amber-50 hover:bg-amber-100 border border-amber-200 rounded-full transition flex items-center space-x-1 shadow-2xs">
         <span>☕</span>
         <span class="hidden lg:inline">Buy Coffee</span>
       </a>
-      <button onclick="navigator.clipboard.writeText('GG2eQbVh8ut1BK6j1A2tz7pSySdLpD38BgyEhGcxdXoK'); showToast('Solana Tip Address Copied: GG2eQbVh8ut1BK6j1A2tz7pSySdLpD38BgyEhGcxdXoK', 'success');" title="Copy Solana Tip Address: GG2eQbVh8ut1BK6j1A2tz7pSySdLpD38BgyEhGcxdXoK" class="px-2.5 py-1.5 text-xs font-semibold text-emerald-900 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 rounded-full transition flex items-center space-x-1 shadow-2xs">
+      <button onclick="navigator.clipboard.writeText('GG2eQbVh8ut1BK6j1A2tz7pSySdLpD38BgyEhGcxdXoK'); showToast('Solana Tip Address Copied: GG2eQbVh8ut1BK6j1A2tz7pSySdLpD38BgyEhGcxdXoK', 'success');" title="Copy Solana Tip Address: GG2eQbVh8ut1BK6j1A2tz7pSySdLpD38BgyEhGcxdXoK" aria-label="Copy Solana Tip Address" class="shrink-0 whitespace-nowrap px-2.5 py-1.5 text-xs font-semibold text-emerald-900 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 rounded-full transition flex items-center space-x-1 shadow-2xs">
         <span>◎</span>
         <span class="hidden lg:inline">Tip SOL</span>
       </button>
 
       <!-- Clear Chat Action -->
-      <button onclick="clearChat()" title="Reset Chat Conversation" class="p-2 text-gsub hover:text-gred hover:bg-red-50 rounded-full transition">
+      <button onclick="clearChat()" title="Reset Chat Conversation" aria-label="Reset Chat Conversation" class="shrink-0 p-2 text-gsub hover:text-gred hover:bg-red-50 rounded-full transition">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
       </button>
 
@@ -795,15 +804,15 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
                  onkeydown="handleChatInputKey(event)"
                  class="flex-1 min-w-0 bg-transparent text-sm text-gdark placeholder-gray-400 focus:outline-none py-2 font-medium">
           
-          <button type="button" onclick="openCommandPalette()" title="Commands (⌘K)" class="p-2 text-gsub hover:text-gblue hover:bg-blue-50 rounded-full transition shrink-0">
+          <button type="button" onclick="openCommandPalette()" title="Commands (⌘K)" aria-label="Open Command Palette" class="p-2 text-gsub hover:text-gblue hover:bg-blue-50 rounded-full transition shrink-0">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
           </button>
 
-          <button type="button" onclick="setTab('browser')" title="Open Interactive Browser" class="p-2 text-gsub hover:text-gblue hover:bg-blue-50 rounded-full transition shrink-0">
+          <button type="button" onclick="setTab('browser')" title="Open Interactive Browser" aria-label="Open Interactive Browser" class="p-2 text-gsub hover:text-gblue hover:bg-blue-50 rounded-full transition shrink-0">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path></svg>
           </button>
 
-          <button type="submit" id="send-btn" title="Send (Ctrl+Enter)" class="w-10 h-10 rounded-full bg-gblue hover:bg-gblueHover text-white flex items-center justify-center shadow-md transition disabled:opacity-50 shrink-0 active:scale-95">
+          <button type="submit" id="send-btn" title="Send (Ctrl+Enter)" aria-label="Send Message" class="w-10 h-10 rounded-full bg-gblue hover:bg-gblueHover text-white flex items-center justify-center shadow-md transition disabled:opacity-50 shrink-0 active:scale-95">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
           </button>
         </form>
@@ -812,29 +821,29 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
     </main>
 
     <!-- Right: Multi-Tool Inspector Sidebar -->
-    <aside class="w-full xl:w-[520px] bg-white border-t xl:border-t-0 xl:border-l border-gborder flex flex-col shadow-sm select-text shrink-0">
+    <aside class="w-full xl:w-[520px] bg-white border-t xl:border-t-0 xl:border-l border-gborder flex flex-col shadow-sm select-text shrink-0 pb-[env(safe-area-inset-bottom,0px)]">
       
       <!-- Tab Navigation Header -->
-      <div class="flex flex-wrap border-b border-gborder bg-gray-50/70 text-xs font-semibold shrink-0">
-        <button onclick="setTab('browser')" id="tab-btn-browser" class="flex-1 min-w-[72px] py-3 text-gblue border-b-2 border-gblue bg-white font-bold flex items-center justify-center space-x-1 transition">
+      <div class="flex flex-nowrap overflow-x-auto no-scrollbar border-b border-gborder bg-gray-50/70 text-xs font-semibold shrink-0">
+        <button onclick="setTab('browser')" id="tab-btn-browser" class="shrink-0 xl:flex-1 whitespace-nowrap px-3 xl:px-1.5 py-2.5 sm:py-3 text-gblue border-b-2 border-gblue bg-white font-bold flex items-center justify-center gap-1 transition">
           <span>🌐</span><span>Browser</span>
         </button>
-        <button onclick="setTab('terminal')" id="tab-btn-terminal" class="flex-1 min-w-[72px] py-3 text-gsub hover:text-gdark border-b-2 border-transparent flex items-center justify-center space-x-1 transition">
+        <button onclick="setTab('terminal')" id="tab-btn-terminal" class="shrink-0 xl:flex-1 whitespace-nowrap px-3 xl:px-1.5 py-2.5 sm:py-3 text-gsub hover:text-gdark border-b-2 border-transparent flex items-center justify-center gap-1 transition">
           <span>💻</span><span>OS Env</span>
         </button>
-        <button onclick="setTab('ducky')" id="tab-btn-ducky" class="flex-1 min-w-[72px] py-3 text-gsub hover:text-gdark border-b-2 border-transparent flex items-center justify-center space-x-1 transition">
+        <button onclick="setTab('ducky')" id="tab-btn-ducky" class="shrink-0 xl:flex-1 whitespace-nowrap px-3 xl:px-1.5 py-2.5 sm:py-3 text-gsub hover:text-gdark border-b-2 border-transparent flex items-center justify-center gap-1 transition">
           <span>🦆</span><span>Ducky</span>
         </button>
-        <button onclick="setTab('engines')" id="tab-btn-engines" class="flex-1 min-w-[72px] py-3 text-gsub hover:text-gdark border-b-2 border-transparent flex items-center justify-center space-x-1 transition">
+        <button onclick="setTab('engines')" id="tab-btn-engines" class="shrink-0 xl:flex-1 whitespace-nowrap px-3 xl:px-1.5 py-2.5 sm:py-3 text-gsub hover:text-gdark border-b-2 border-transparent flex items-center justify-center gap-1 transition">
           <span>⚡</span><span>Engines</span>
         </button>
-        <button onclick="setTab('workspace')" id="tab-btn-workspace" class="flex-1 min-w-[72px] py-3 text-gsub hover:text-gdark border-b-2 border-transparent flex items-center justify-center space-x-1 transition">
+        <button onclick="setTab('workspace')" id="tab-btn-workspace" class="shrink-0 xl:flex-1 whitespace-nowrap px-3 xl:px-1.5 py-2.5 sm:py-3 text-gsub hover:text-gdark border-b-2 border-transparent flex items-center justify-center gap-1 transition">
           <span>📁</span><span>Files</span>
         </button>
-        <button onclick="setTab('customizer')" id="tab-btn-customizer" class="flex-1 min-w-[72px] py-3 text-gsub hover:text-gdark border-b-2 border-transparent flex items-center justify-center space-x-1 transition">
+        <button onclick="setTab('customizer')" id="tab-btn-customizer" class="shrink-0 xl:flex-1 whitespace-nowrap px-3 xl:px-1.5 py-2.5 sm:py-3 text-gsub hover:text-gdark border-b-2 border-transparent flex items-center justify-center gap-1 transition">
           <span>🎨</span><span>Studio</span>
         </button>
-        <button onclick="setTab('topology')" id="tab-btn-topology" class="flex-1 min-w-[72px] py-3 text-gsub hover:text-gdark border-b-2 border-transparent flex items-center justify-center space-x-1 transition">
+        <button onclick="setTab('topology')" id="tab-btn-topology" class="shrink-0 xl:flex-1 whitespace-nowrap px-3 xl:px-1.5 py-2.5 sm:py-3 text-gsub hover:text-gdark border-b-2 border-transparent flex items-center justify-center gap-1 transition">
           <span>🗺️</span><span>Topo</span>
         </button>
       </div>
@@ -2839,9 +2848,9 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
         if (el) el.classList.toggle('hidden', !isActive);
         if (btn) {
           if (isActive) {
-            btn.className = 'flex-1 py-3 text-gblue border-b-2 border-gblue bg-white font-bold flex items-center justify-center space-x-1 transition';
+            btn.className = 'shrink-0 xl:flex-1 whitespace-nowrap px-3 xl:px-1.5 py-2.5 sm:py-3 text-gblue border-b-2 border-gblue bg-white font-bold flex items-center justify-center gap-1 transition';
           } else {
-            btn.className = 'flex-1 py-3 text-gsub hover:text-gdark border-b-2 border-transparent flex items-center justify-center space-x-1 transition';
+            btn.className = 'shrink-0 xl:flex-1 whitespace-nowrap px-3 xl:px-1.5 py-2.5 sm:py-3 text-gsub hover:text-gdark border-b-2 border-transparent flex items-center justify-center gap-1 transition';
           }
         }
       });
